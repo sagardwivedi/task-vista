@@ -1,6 +1,8 @@
+import { Sidebar } from "@/components/Sidebar/Sidebar";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ModalProvider } from "@/lib/providers/ModalProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ModalProvider />
+        <main className="flex flex-row min-h-screen">
+          <section className="w-fit">
+            <Sidebar />
+          </section>
+          <section className="flex-1">{children}</section>
+        </main>
+      </body>
     </html>
   );
 }
