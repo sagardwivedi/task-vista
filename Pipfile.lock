@@ -46,7 +46,6 @@
                 "sha256:b978095b9ee01a5cf49b19f4bc1ac9b8ca83aa076e770ef8fd9af09a2b88d191"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.8'",
             "version": "==0.109.0"
         },
         "greenlet": {
@@ -421,7 +420,6 @@
                 "sha256:accea3ff5d878e41ac439b11e78613ed61ce300cfcb860e87a2d73d4884cbee4"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7' and python_version < '4.0'",
             "version": "==0.0.14"
         },
         "starlette": {
@@ -448,7 +446,7 @@
                 "sha256:890b00f6c537d58695d3bb1f28e23db9d9e7a17cbcc76d7457c499935f933e24",
                 "sha256:c855578045d45625fd027367f7653d249f7c49f9361ba15cf9624186b26b8eb6"
             ],
-            "markers": "python_version >= '3.8'",
+            "index": "pypi",
             "version": "==0.27.0"
         },
         "uvloop": {
