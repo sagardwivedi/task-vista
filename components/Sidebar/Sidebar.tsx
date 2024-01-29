@@ -16,7 +16,7 @@ export async function Sidebar() {
         <p className="text-2xl font-semibold">Task Vista</p>
       </div>
       <div>
-        <h2 className='px-5'>ALL BOARDS({boards.length})</h2>
+        <h2 className="px-5">ALL BOARDS({boards.length})</h2>
         <Each
           of={boards}
           render={(board, index) => (
