@@ -13,10 +13,13 @@ export async function getBoards(): Promise<Array<Board>> {
   return boards;
 }
 
-export async function getBoard(board_id: string): Promise<Board> {
+export async function getBoard(board_id: string): Promise<Board | null> {
   const response = await fetch(`${URL}/boards/${Number(board_id)}`, {
     method: 'GET',
   });
+  if (response.status === 404) {
+    return null;
+  }
   const board = await response.json();
   return board;
 }
