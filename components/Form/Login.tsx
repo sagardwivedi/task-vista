@@ -2,9 +2,13 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { infer as InferType, object, string } from 'zod';
 
+import { signin } from '@/app/auth/actions';
 import {
     Form,
     FormControl,
@@ -15,20 +19,23 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import Link from 'next/link';
+import { cn } from '@/lib/utils/utils';
 import { Button } from '../ui/button';
+import { toast } from '../ui/use-toast';
 import { PasswordRules } from './PasswordRules';
 
 const loginFormSchema = object({
     email: string().email(),
-    password: string()
-        .min(8, 'Password must be at least 8 characters.')
-        .max(50, 'Password cannot exceed 50 characters.'),
+    password: string().min(1, {
+        message: 'Password is required.',
+    }),
 });
 
 export type loginFormType = InferType<typeof loginFormSchema>;
 
 export function LoginForm() {
+    const [isPending, startTransition] = useTransition();
+
     const form = useForm<loginFormType>({
         resolver: zodResolver(loginFormSchema),
         defaultValues: {
@@ -37,10 +44,25 @@ export function LoginForm() {
         },
     });
 
-    function onSubmit(values: loginFormType) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
+    function onSubmit(data: loginFormType) {
+        form.reset();
+        startTransition(async () => {
+           await signin(data);
+
+            // if (error?.message) {
+            //     toast({
+            //         variant: 'destructive',
+            //         title: 'Fail to Login',
+            //         description: (
+            //             <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            //                 <code className="text-white">{error.message}</code>
+            //             </pre>
+            //         ),
+            //     });
+            // } else {
+            //     redirect('/board');
+            // }
+        });
     }
     return (
         <Form {...form}>
@@ -55,6 +77,8 @@ export function LoginForm() {
                                 <Input
                                     placeholder="sagar@gmail.com"
                                     {...field}
+                                    type="email"
+                                    onChange={field.onChange}
                                 />
                             </FormControl>
                             <FormMessage />
@@ -69,9 +93,10 @@ export function LoginForm() {
                             <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input
-                                    type="password"
                                     placeholder="********"
                                     {...field}
+                                    type="password"
+                                    onChange={field.onChange}
                                 />
                             </FormControl>
                             <FormDescription className="text-md text-right text-neutral-950 underline-offset-2 hover:underline">
@@ -85,14 +110,13 @@ export function LoginForm() {
                     )}
                 />
                 <Button
-                    size={'lg'}
                     type="submit"
-                    className="w-full"
+                    className="flex w-full gap-2"
                     disabled={form.formState.isSubmitting}
                 >
-                    {form.formState.isSubmitting && (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    )}
+                    <Loader2
+                        className={cn(' animate-spin', { hidden: !isPending })}
+                    />
                     Log In
                 </Button>
                 <p className="text-center">
