@@ -1,5 +1,4 @@
 import { Sidebar } from '@/components/Sidebar/Sidebar';
-import { ModalProvider } from '@/lib/providers/ModalProvider';
 
 export default function BoardLayout({
   children,
@@ -8,7 +7,6 @@ export default function BoardLayout({
 }>) {
   return (
     <main className="flex min-h-screen flex-row">
-      <ModalProvider />
       <section className="w-fit">
         <Sidebar />
       </section>

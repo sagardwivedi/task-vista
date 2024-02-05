@@ -11,7 +11,7 @@ export function ActiveLink({
   children: React.ReactNode;
 }) {
   const path = usePathname();
-  const isActive = `/${href}` === path;
+  const isActive = href === path;
 
   return (
     <Link
