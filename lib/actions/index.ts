@@ -17,6 +17,13 @@ export async function readUserSession() {
 export async function fetchBoards() {
   const cookieStore = cookies();
   const supabase = createServerClient<Database>(cookieStore);
-  const { data, count } = await supabase.from('board').select('*');
-  return { data, count };
+  const { data } = await supabase.from('board').select('*');
+  return { data };
+}
+
+export async function fetchBoard(id: number) {
+  const cookieStore = cookies();
+  const supabase = createServerClient<Database>(cookieStore);
+  const { data } = await supabase.from('board').select('name').eq("id", id).single();
+  return { data };
 }
