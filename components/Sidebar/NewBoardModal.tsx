@@ -1,10 +1,12 @@
 'use client';
 
-import { PlusIcon } from 'lucide-react';
+import { Loader2, PenIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import { addBoard } from '@/lib/actions';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -24,6 +26,7 @@ import {
   FormMessage,
 } from '../ui/form';
 import { Input } from '../ui/input';
+import { toast } from '../ui/use-toast';
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -33,27 +36,62 @@ type formType = z.infer<typeof formSchema>;
 
 export function NewBoardModal() {
   const [open, setOpen] = useState(false);
-  const form = useForm<formType>({ defaultValues: { name: '' } });
+  const form = useForm<formType>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { name: '' },
+  });
 
   async function onSubmit(data: formType) {
-    alert(JSON.stringify(data, null, 2));
+    const { error } = await addBoard(data.name);
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'You submitted the following value: ',
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-neutral-950 p-4">
+            <code className="text-white">{error.message}</code>
+          </pre>
+        ),
+      });
+    } else {
+      toast({
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-neutral-950 p-4">
+            <code className="text-white">Board Added</code>
+          </pre>
+        ),
+      });
+      form.reset();
+      setOpen(!open);
+    }
   }
 
-  function onChange() {
-    setOpen(true);
-  }
+  const onOpenChangeHandler = () => {
+    const isDirty = form.formState.isDirty;
+
+    if (
+      open &&
+      isDirty &&
+      !window.confirm('Do you want to continue or discard')
+    ) {
+      // If the form is open, has changes, and user cancels, do nothing
+      return;
+    }
+
+    // If the form is closed or user confirmed, toggle the 'open' state
+    setOpen(!open);
+
+    if (open && isDirty) {
+      // If the form is open and has changes, reset the form
+      form.reset(); // Replace this with your form reset logic
+    }
+  };
 
   return (
-    <Dialog open={open} onOpenChange={onChange}>
+    <Dialog open={open} onOpenChange={onOpenChangeHandler}>
       <DialogTrigger asChild>
-        <Button
-          type="button"
-          variant={'ghost'}
-          size={'lg'}
-          className="mt-2 w-full"
-        >
-          <PlusIcon className="mr-2 size-4" />
-          Create New Board
+        <Button type="button" variant={'ghost'} size={'icon'}>
+          <PenIcon />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -81,8 +119,16 @@ export function NewBoardModal() {
                   </FormItem>
                 )}
               />
-              <Button className="mt-2 w-full" size={'lg'}>
-                Submit
+              <Button
+                disabled={form.formState.isSubmitting}
+                className="mt-2 w-full"
+                size={'lg'}
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  'Submit'
+                )}
               </Button>
             </form>
           </Form>
