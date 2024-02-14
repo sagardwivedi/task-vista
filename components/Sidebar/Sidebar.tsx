@@ -10,10 +10,9 @@ export async function Sidebar() {
   const { board } = await fetchBoards();
 
   return (
-    <div className="h-full w-[18rem] border-r px-2 max-md:hidden">
+    <div className="h-full w-[18rem] border-r px-4 max-md:hidden">
       <NewBoardModal />
       <div>
-        <h2 className="mb-2 px-5">ALL BOARDS ({board?.length})</h2>
         <ScrollArea className="h-[550px]">
           <Each
             of={board!}

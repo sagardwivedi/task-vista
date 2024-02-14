@@ -90,7 +90,14 @@ export function NewBoardModal() {
   return (
     <Dialog open={open} onOpenChange={onOpenChangeHandler}>
       <DialogTrigger asChild>
-        <Button type="button" variant={'ghost'} size={'icon'}>
+        <Button
+          type="button"
+          variant={'ghost'}
+          className="my-2 flex w-full flex-row items-center justify-between px-3 py-2"
+        >
+          <div className="inline-flex size-8 items-center justify-center rounded-full bg-black text-white">
+            TK
+          </div>
           <PenIcon />
         </Button>
       </DialogTrigger>
