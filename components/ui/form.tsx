@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form';
 
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils/utils';
+import { cn } from '@/lib/utils';
 
 const Form = FormProvider;
 
@@ -82,6 +82,7 @@ const FormItem = forwardRef<
     </FormItemContext.Provider>
   );
 });
+
 FormItem.displayName = 'FormItem';
 
 const FormLabel = forwardRef<
@@ -93,12 +94,13 @@ const FormLabel = forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-red-500 dark:text-red-900', className)}
+      className={cn(error && 'text-destructive', className)}
       htmlFor={formItemId}
       {...props}
     />
   );
 });
+
 FormLabel.displayName = 'FormLabel';
 
 const FormControl = forwardRef<
@@ -122,6 +124,7 @@ const FormControl = forwardRef<
     />
   );
 });
+
 FormControl.displayName = 'FormControl';
 
 const FormDescription = forwardRef<
@@ -134,14 +137,12 @@ const FormDescription = forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn(
-        'text-[0.8rem] text-neutral-500 dark:text-neutral-400',
-        className,
-      )}
+      className={cn('text-muted-foreground text-[0.8rem]', className)}
       {...props}
     />
   );
 });
+
 FormDescription.displayName = 'FormDescription';
 
 const FormMessage = forwardRef<
@@ -159,16 +160,14 @@ const FormMessage = forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn(
-        'text-[0.8rem] font-medium text-red-500 dark:text-red-900',
-        className,
-      )}
+      className={cn('text-destructive text-[0.8rem] font-medium', className)}
       {...props}
     >
       {body}
     </p>
   );
 });
+
 FormMessage.displayName = 'FormMessage';
 
 export {

@@ -1,12 +1,13 @@
 'use client';
 
-import { Loader2, PenIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { addBoard } from '@/lib/actions';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Pencil2Icon } from '@radix-ui/react-icons';
+import { Loader2Icon } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
   Dialog,
@@ -93,12 +94,13 @@ export function NewBoardModal() {
         <Button
           type="button"
           variant={'ghost'}
-          className="my-2 flex w-full flex-row items-center justify-between px-3 py-2"
+          size={'lg'}
+          className="flex w-full flex-row items-center justify-between px-3 py-2"
         >
           <div className="inline-flex size-8 items-center justify-center rounded-full bg-black text-white">
             TK
           </div>
-          <PenIcon />
+          <Pencil2Icon />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -132,7 +134,7 @@ export function NewBoardModal() {
                 size={'lg'}
               >
                 {form.formState.isSubmitting ? (
-                  <Loader2 className="animate-spin" />
+                  <Loader2Icon className="animate-spin" />
                 ) : (
                   'Submit'
                 )}

@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils/utils';
+import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
 import { PasswordRules } from './PasswordRules';

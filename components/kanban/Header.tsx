@@ -9,7 +9,7 @@ export async function Header({ id }: { id: string }) {
   }
 
   return (
-    <div className="flex h-12 items-center justify-center border-b px-4 md:h-20 md:px-8">
+    <div className="flex h-12 items-center justify-center px-4 md:h-20 md:px-8">
       <div className="flex w-full flex-row items-center justify-between">
         <h1 className="text-2xl font-semibold">{data.name}</h1>
         <div>
