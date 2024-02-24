@@ -7,7 +7,7 @@ interface EachProps<T> {
   /**
    * The array of items to iterate over.
    */
-  of: T[];
+  of: T[] | null;
 
   /**
    * The rendering function for each item.
@@ -24,8 +24,14 @@ interface EachProps<T> {
  *
  * @template T - The type of items in the array.
  * @param {EachProps<T>} props - The component props.
- * @returns {React.ReactNode} - The rendered React node.
+ * @returns {React.ReactNode | null} - The rendered React node, or null if 'of' is null.
  */
-export function Each<T>({ of, render }: EachProps<T>): React.ReactNode {
+export function Each<T>({ of, render }: EachProps<T>): React.ReactNode | null {
+  // Check if 'of' is null, and return null if true
+  if (of === null) {
+    return null;
+  }
+
+  // If 'of' is not null, proceed with mapping and rendering
   return <>{of.map((item, index) => render(item, index))}</>;
 }

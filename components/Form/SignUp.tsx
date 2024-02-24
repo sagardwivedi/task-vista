@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { infer as InferType, object, string } from 'zod';
 
@@ -17,7 +18,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { useTransition } from 'react';
 import { Button } from '../ui/button';
 import { toast } from '../ui/use-toast';
 import { PasswordRules } from './PasswordRules';
@@ -42,11 +42,6 @@ export function SignUpForm() {
 
   const form = useForm<signupFormType>({
     resolver: zodResolver(signpForm),
-    defaultValues: {
-      email: '',
-      password: '',
-      confirm: '',
-    },
   });
 
   async function onSubmit(values: signupFormType) {

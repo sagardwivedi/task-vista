@@ -39,7 +39,6 @@ export function NewBoardModal() {
   const [open, setOpen] = useState(false);
   const form = useForm<formType>({
     resolver: zodResolver(formSchema),
-    defaultValues: { name: '' },
   });
 
   async function onSubmit(data: formType) {
