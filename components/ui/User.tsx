@@ -1,3 +1,3 @@
 export const User = () => {
-    return <div></div>
+  return <div></div>;
 };

@@ -9,7 +9,7 @@ import {
 } from '@radix-ui/react-scroll-area';
 import { forwardRef } from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 
 const ScrollArea = forwardRef<
   React.ElementRef<typeof Root>,
@@ -45,7 +45,7 @@ const ScrollBar = forwardRef<
     )}
     {...props}
   >
-    <ScrollAreaThumb className="bg-border relative flex-1 rounded-full" />
+    <ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
   </ScrollAreaScrollbar>
 ));
 

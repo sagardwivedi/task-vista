@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form';
 
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 
 const Form = FormProvider;
 
@@ -137,7 +137,7 @@ const FormDescription = forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-muted-foreground text-[0.8rem]', className)}
+      className={cn('text-[0.8rem] text-muted-foreground', className)}
       {...props}
     />
   );
@@ -160,7 +160,7 @@ const FormMessage = forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-destructive text-[0.8rem] font-medium', className)}
+      className={cn('text-[0.8rem] font-medium text-destructive', className)}
       {...props}
     >
       {body}
@@ -178,6 +178,5 @@ export {
   FormItem,
   FormLabel,
   FormMessage,
-  useFormField
+  useFormField,
 };
-

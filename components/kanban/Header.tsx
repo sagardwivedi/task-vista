@@ -13,7 +13,7 @@ export async function Header({ id }: { id: string }) {
       <div className="flex w-full flex-row items-center justify-between">
         <h1 className="text-2xl font-semibold">{data.name}</h1>
         <div>
-          <button type='button'>New Task</button>
+          <button type="button">New Task</button>
         </div>
       </div>
     </div>

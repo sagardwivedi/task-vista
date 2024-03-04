@@ -2,23 +2,23 @@
 
 import { loginFormType } from '@/components/Form/Login';
 import { signupFormType } from '@/components/Form/SignUp';
-import { createClient } from '@/lib/utils/supabase/actions';
+import { createSerClient } from '@/lib/utils/supabase/server';
 
 export async function signup(data: signupFormType) {
-  const supabase = createClient();
+    const supabase = createSerClient();
 
-  const result = await supabase.auth.signUp({
-    email: data.email,
-    password: data.password,
-  });
+    const result = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+    });
 
-  return JSON.stringify(result);
+    return JSON.stringify(result);
 }
 
 export async function signin(data: loginFormType) {
-  const supabase = createClient();
+    const supabase = createSerClient();
 
-  const result = await supabase.auth.signInWithPassword(data);
+    const result = await supabase.auth.signInWithPassword(data);
 
-  return JSON.stringify(result);
+    return JSON.stringify(result);
 }

@@ -3,7 +3,7 @@
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/utils';
 import { Switch } from './switch';
 
 export const ThemeToggler = () => {
