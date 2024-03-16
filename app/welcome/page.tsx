@@ -1,3 +1,3 @@
 export default function Welcome() {
-  return <div>User</div>;
+  return <div>Welcome new user</div>;
 }

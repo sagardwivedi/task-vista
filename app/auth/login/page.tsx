@@ -1,19 +1,24 @@
-import { LoginForm } from '@/components/Form/Login';
-import { readUserSession } from '@/lib/actions';
+import { LoginForm } from '@/components/form';
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import { checkForLogin } from '../utils';
+
+export const metadata: Metadata = {
+  title: 'Sign In',
+};
 
 export default async function Login() {
-  const { data } = await readUserSession();
+  const isLogin = await checkForLogin();
 
-  if (data.session) {
-    return redirect('/board');
+  if (isLogin) {
+    redirect('/board');
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-[90%] max-w-md">
         <h1 className="mb-5 text-center text-2xl font-semibold">
-          Task Vista | Sign In
+          Welcome Back
         </h1>
         <LoginForm />
       </div>

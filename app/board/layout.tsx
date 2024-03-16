@@ -1,5 +1,4 @@
-import { Sidebar } from '@/components/Sidebar/Sidebar';
-import { ThemeProvider } from '@/lib/providers/theme-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export default function BoardLayout({
   children,
@@ -13,12 +12,7 @@ export default function BoardLayout({
       enableSystem
       disableTransitionOnChange
     >
-      <main className="flex min-h-screen flex-row">
-        <section className="w-fit">
-          <Sidebar />
-        </section>
-        <section className="flex-1">{children}</section>
-      </main>
+      {children}
     </ThemeProvider>
   );
 }
