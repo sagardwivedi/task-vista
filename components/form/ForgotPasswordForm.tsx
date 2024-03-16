@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -15,6 +14,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { sendPasswordResetLink } from '@/lib/actions/authAction';
+import { useToast } from '../ui/use-toast';
+import { AuthFormButton } from './button';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please provide valid email' }),
@@ -26,9 +28,23 @@ export default function ForgotPassword() {
   const form = useForm<formSchemaType>({
     resolver: zodResolver(formSchema),
   });
+  const { toast } = useToast();
   return (
     <Form {...form}>
-      <form className="space-y-5">
+      <form
+        onSubmit={form.handleSubmit(async (data) => {
+          const error = await sendPasswordResetLink({ email: data.email });
+          if (error) {
+            toast({ variant: 'destructive', description: error });
+            console.error(error);
+          }
+          toast({
+            description: 'Please check your email',
+          });
+          form.reset();
+        })}
+        className="space-y-5"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -48,9 +64,7 @@ export default function ForgotPassword() {
           )}
         />
 
-        <Button className="w-full" size={'lg'}>
-          Continue
-        </Button>
+        <AuthFormButton isSubmitting={form.formState.isSubmitting} />
 
         <Link href={'login'} className="block text-center text-green-500">
           Back to Log in

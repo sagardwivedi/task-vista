@@ -31,3 +31,28 @@ export async function signup(formData: AuthFormType) {
     return error.message;
   }
 }
+
+export async function sendPasswordResetLink({ email }: { email: string }) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { error } = await supabase.auth.resetPasswordForEmail(email);
+
+  if (error) {
+    return error.message;
+  }
+}
+
+export async function resetPassword({ password }: { password: string }) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { error } = await supabase.auth.updateUser({
+    password,
+  });
+
+  if (error) {
+    return error.message;
+  }
+
+  redirect('login');
+}

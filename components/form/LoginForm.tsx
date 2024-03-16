@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { login } from '@/lib/actions/authAction';
-import { LoaderCircleIcon } from 'lucide-react';
+import { AuthFormButton } from './button';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please provide valid email' }),
@@ -35,8 +35,6 @@ export default function LoginForm() {
       password: '',
     },
   });
-
-  const isSubmitting = form.formState.isSubmitting;
 
   const handleFormSubmit = async (info: formSchemaType) => {
     try {
@@ -83,13 +81,7 @@ export default function LoginForm() {
         <div className="text-sm text-green-500 underline-offset-2 hover:underline">
           <Link href={'forgot-password'}>Forgot Password?</Link>
         </div>
-        <Button disabled={isSubmitting} className="w-full" size={'lg'}>
-          {isSubmitting ? (
-            <LoaderCircleIcon className="animate-spin text-2xl" />
-          ) : (
-            'Continue'
-          )}
-        </Button>
+        <AuthFormButton isSubmitting={form.formState.isSubmitting} />
         <div className="flex flex-row items-center justify-center">
           <p>Don&apos;t have an account?</p>
           <Button
