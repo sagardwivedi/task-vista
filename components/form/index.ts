@@ -5,4 +5,3 @@ import SignUpForm from './SignUpForm';
 
 export { ForgotPasswordForm, LoginForm, ResetPasswordForm, SignUpForm };
 export type { AuthFormType };
-
