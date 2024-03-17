@@ -1,128 +1,128 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { signup } from '@/lib/actions/authAction';
-import { useToast } from '../ui/use-toast';
-import { AuthFormButton } from './button';
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { signup } from "@/lib/actions/authAction";
+import { useToast } from "../ui/use-toast";
+import { AuthFormButton } from "./button";
 
 const formSchema = z
-  .object({
-    email: z.string().email({ message: 'Please provide valid email' }),
-    password: z.string().min(8),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: "Your password doesn't match",
-  });
+	.object({
+		email: z.string().email({ message: "Please provide valid email" }),
+		password: z.string().min(8),
+		confirmPassword: z.string(),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		path: ["confirmPassword"],
+		message: "Your password doesn't match",
+	});
 
 type signUpFormType = z.infer<typeof formSchema>;
 
 export default function SignUpForm() {
-  const form = useForm<signUpFormType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      confirmPassword: '',
-      email: '',
-      password: '',
-    },
-  });
-  const { toast } = useToast();
+	const form = useForm<signUpFormType>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			confirmPassword: "",
+			email: "",
+			password: "",
+		},
+	});
+	const { toast } = useToast();
 
-  const handleFormSubmit: SubmitHandler<
-    Omit<signUpFormType, 'confirmPassword'>
-  > = async (info) => {
-    try {
-      const error = await signup(info);
-      if (!error) {
-        toast({
-          description: 'Please check your email',
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      form.reset();
-    }
-  };
+	const handleFormSubmit: SubmitHandler<
+		Omit<signUpFormType, "confirmPassword">
+	> = async (info) => {
+		try {
+			const error = await signup(info);
+			if (!error) {
+				toast({
+					description: "Please check your email",
+				});
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			form.reset();
+		}
+	};
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleFormSubmit)}
-        className="space-y-5"
-      >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  autoFocus
-                  placeholder="sagar@gamil.con"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="**********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Retype Password</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="**********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <AuthFormButton isSubmitting={form.formState.isSubmitting} />
-        <div className="flex flex-row items-center justify-center">
-          <p>Already have an account?</p>
-          <Button
-            className="text-green-500"
-            variant={'link'}
-            size={'sm'}
-            asChild
-          >
-            <Link href={'login'}>Log in</Link>
-          </Button>
-        </div>
-      </form>
-    </Form>
-  );
+	return (
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(handleFormSubmit)}
+				className="space-y-5"
+			>
+				<FormField
+					control={form.control}
+					name="email"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Email</FormLabel>
+							<FormControl>
+								<Input
+									type="email"
+									autoFocus
+									placeholder="sagar@gamil.con"
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="password"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Password</FormLabel>
+							<FormControl>
+								<Input type="password" placeholder="**********" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="confirmPassword"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Retype Password</FormLabel>
+							<FormControl>
+								<Input type="password" placeholder="**********" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<AuthFormButton isSubmitting={form.formState.isSubmitting} />
+				<div className="flex flex-row items-center justify-center">
+					<p>Already have an account?</p>
+					<Button
+						className="text-green-500"
+						variant={"link"}
+						size={"sm"}
+						asChild
+					>
+						<Link href={"login"}>Log in</Link>
+					</Button>
+				</div>
+			</form>
+		</Form>
+	);
 }

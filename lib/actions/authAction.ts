@@ -1,15 +1,13 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { AuthFormType } from '@/components/form';
-import { createClient } from '@/lib/utils/supabase/server';
+import createSupabaseServerClient from '@/lib/supabase/server';
 
 export async function login(formData: AuthFormType) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.signInWithPassword(formData);
 
@@ -22,8 +20,7 @@ export async function login(formData: AuthFormType) {
 }
 
 export async function signup(formData: AuthFormType) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.signUp(formData);
 
@@ -33,8 +30,7 @@ export async function signup(formData: AuthFormType) {
 }
 
 export async function sendPasswordResetLink({ email }: { email: string }) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createSupabaseServerClient();
   const { error } = await supabase.auth.resetPasswordForEmail(email);
 
   if (error) {
@@ -43,8 +39,7 @@ export async function sendPasswordResetLink({ email }: { email: string }) {
 }
 
 export async function resetPassword({ password }: { password: string }) {
-  const cookieStore = cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.updateUser({
     password,

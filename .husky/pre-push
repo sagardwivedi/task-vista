@@ -1,1 +1,0 @@
-bun prettier && bun run build
