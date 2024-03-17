@@ -2,11 +2,11 @@ import { redirect } from "next/navigation";
 import { checkForLogin } from "../auth/utils";
 
 export default async function KanbanBoard() {
-	const isLogin = await checkForLogin();
+  const isLogin = await checkForLogin();
 
-	if (!isLogin) {
-		redirect("/auth/login");
-	}
+  if (!isLogin) {
+    redirect("/auth/login");
+  }
 
-	return <div>Hello</div>;
+  return <div>Hello</div>;
 }

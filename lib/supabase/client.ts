@@ -1,5 +1,5 @@
-import { createBrowserClient } from '@supabase/ssr';
-import { useMemo } from 'react';
+import { createBrowserClient } from "@supabase/ssr";
+import { useMemo } from "react";
 
 export function getSupabaseBrowserClient() {
   return createBrowserClient(

@@ -1,25 +1,19 @@
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+import createSupabaseServerClient from "@/lib/supabase/server";
+import { LoginUserInput } from "../schema/user-schema";
 
-import { AuthFormType } from '@/components/form';
-import createSupabaseServerClient from '@/lib/supabase/server';
-
-export async function login(formData: AuthFormType) {
+export async function login(formData: LoginUserInput) {
   const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.signInWithPassword(formData);
 
   if (error) {
-    redirect('/error');
+    return error.message;
   }
-
-  revalidatePath('/', 'layout');
-  redirect('/board');
 }
 
-export async function signup(formData: AuthFormType) {
+export async function signup(formData: LoginUserInput) {
   const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.signUp(formData);
@@ -29,8 +23,9 @@ export async function signup(formData: AuthFormType) {
   }
 }
 
-export async function sendPasswordResetLink({ email }: { email: string }) {
+export async function sendPasswordResetLink(email: string) {
   const supabase = await createSupabaseServerClient();
+
   const { error } = await supabase.auth.resetPasswordForEmail(email);
 
   if (error) {
@@ -38,7 +33,7 @@ export async function sendPasswordResetLink({ email }: { email: string }) {
   }
 }
 
-export async function resetPassword({ password }: { password: string }) {
+export async function resetPassword(password: string) {
   const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.auth.updateUser({
@@ -48,6 +43,4 @@ export async function resetPassword({ password }: { password: string }) {
   if (error) {
     return error.message;
   }
-
-  redirect('login');
 }
