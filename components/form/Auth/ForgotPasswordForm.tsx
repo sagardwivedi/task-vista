@@ -9,8 +9,8 @@ import { sendPasswordResetLink } from "@/lib/actions/authAction";
 import { loginUserSchema } from "@/lib/schema/user-schema";
 import type { z } from "zod";
 import { useToast } from "../../ui/use-toast";
-import { AuthFormButton } from "../shared/button";
-import { EmailInput } from "../shared/form-inputs";
+import { EmailInput } from "@/components/shared/form-inputs";
+import { AuthFormButton } from "@/components/shared/button";
 
 const formSchema = loginUserSchema.omit({ password: true });
 

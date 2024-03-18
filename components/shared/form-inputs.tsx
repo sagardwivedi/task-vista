@@ -69,26 +69,6 @@ export const NameInput = <T extends FieldValues>({
   );
 };
 
-export const FileInput = <T extends FieldValues>({
-  control,
-  name,
-}: InputProps<T>) => {
-  return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Profile Picture</FormLabel>
-          <FormControl>
-            <Input type="file" {...field} />
-          </FormControl>
-        </FormItem>
-      )}
-    />
-  );
-};
-
 export const PasswordInput = <T extends FieldValues>({
   control,
   name,

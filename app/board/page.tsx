@@ -8,5 +8,9 @@ export default async function KanbanBoard() {
     redirect("/auth/login");
   }
 
-  return <div>Hello</div>;
+  return (
+    <div>
+      <main className="overflow-y-auto">l</main>
+    </div>
+  );
 }

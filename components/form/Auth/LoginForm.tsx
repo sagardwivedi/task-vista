@@ -10,8 +10,8 @@ import { Form } from "@/components/ui/form";
 import { login } from "@/lib/actions/authAction";
 import { type LoginUserInput, loginUserSchema } from "@/lib/schema/user-schema";
 import { useToast } from "../../ui/use-toast";
-import { AuthFormButton } from "../shared/button";
-import { EmailInput, PasswordInput } from "../shared/form-inputs";
+import { AuthFormButton } from "../../shared/button";
+import { EmailInput, PasswordInput } from "../../shared/form-inputs";
 
 export default function LoginForm() {
   const form = useForm<LoginUserInput>({

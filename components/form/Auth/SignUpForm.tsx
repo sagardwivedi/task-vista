@@ -2,18 +2,19 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { signup } from "@/lib/actions/authAction";
 import {
-  type CreateUserInput,
   createUserSchema,
+  type CreateUserInput,
 } from "@/lib/schema/user-schema";
+
+import { EmailInput, PasswordInput } from "../../shared/form-inputs";
 import { useToast } from "../../ui/use-toast";
-import { AuthFormButton } from "../shared/button";
-import { EmailInput, PasswordInput } from "../shared/form-inputs";
+import { AuthFormButton } from "@/components/shared/button";
 
 export default function SignUpForm() {
   const form = useForm<CreateUserInput>({

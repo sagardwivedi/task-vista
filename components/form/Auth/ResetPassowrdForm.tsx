@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { Form } from "@/components/ui/form";
 import { resetPassword } from "@/lib/actions/authAction";
 import { useToast } from "../../ui/use-toast";
-import { AuthFormButton } from "../shared/button";
-import { PasswordInput } from "../shared/form-inputs";
+import { PasswordInput } from "@/components/shared/form-inputs";
+import { AuthFormButton } from "@/components/shared/button";
 
 const formSchema = z
   .object({
