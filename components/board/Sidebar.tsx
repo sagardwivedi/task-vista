@@ -1,18 +1,20 @@
-import { getBoard } from "@/lib/actions/dataAction";
 import { SidebarIcon } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+
+import { getBoard, getUserInfo } from "@/lib/actions/dataAction";
 import { BoardLinkSkeleton } from "../skeleton";
 import { ScrollArea } from "../ui/scroll-area";
+import { UserDropDown } from "../user-toggle";
 import { NewBoard } from "./Newboard";
-import { ModeToggle } from "../mode-toggle";
-import { Avatar } from "../ui/avatar";
 
-export function Sidebar() {
+export async function Sidebar() {
+  const data = await getUserInfo();
+
   return (
     <div className="bg-slate-50 p-2 dark:bg-slate-900 h-full">
       <NewBoard />
-      <div className="mt-5 h-[550px]">
+      <div className="mt-5 h-[520px]">
         <p className="mb-2">ALL BOARDS</p>
         <Suspense fallback={<BoardLinkSkeleton />}>
           <ScrollArea>
@@ -20,11 +22,7 @@ export function Sidebar() {
           </ScrollArea>
         </Suspense>
       </div>
-      <ModeToggle />
-      <div className="w-full p-3">
-        <Avatar></Avatar>
-        <p></p>
-      </div>
+      <UserDropDown name={data?.full_name} />
     </div>
   );
 }

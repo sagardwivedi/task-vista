@@ -11,6 +11,16 @@ export async function getBoard() {
   return { data, error };
 }
 
+export async function getUserInfo() {
+  const supabase = await createSupabaseServerClient();
+  const user_id = await getUserId();
+  const { data } = await supabase
+    .from("profiles")
+    .select("full_name")
+    .eq("id", user_id || "").single();
+  return data
+}
+
 export async function addBoard(data: BoardInput) {
   const supabase = await createSupabaseServerClient();
   const user_id = await getUserId();
