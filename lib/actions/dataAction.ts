@@ -17,8 +17,9 @@ export async function getUserInfo() {
   const { data } = await supabase
     .from("profiles")
     .select("full_name")
-    .eq("id", user_id || "").single();
-  return data
+    .eq("id", user_id || "")
+    .single();
+  return data;
 }
 
 export async function addBoard(data: BoardInput) {
