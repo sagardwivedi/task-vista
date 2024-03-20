@@ -3,7 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PenIcon } from "lucide-react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
+import { addBoard } from "@/lib/actions/dataAction";
 import {
   profileSchema as boardSchema,
   type ProfileInput as BoardInput,
@@ -19,8 +21,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import { useToast } from "../ui/use-toast";
+import { Button } from "../ui/button";
 
 export function NewBoard() {
+  const [isOpen, setIsOpen] = useState(false);
   const form = useForm<BoardInput>({
     resolver: zodResolver(boardSchema),
     defaultValues: {
@@ -28,17 +33,32 @@ export function NewBoard() {
     },
   });
 
-  const handleSubmit: SubmitHandler<BoardInput> = (data) => {
-    console.log(data);
+  const { toast } = useToast();
+
+  const handleSubmit: SubmitHandler<BoardInput> = async (data) => {
+    const { error } = await addBoard(data);
+    if (error) {
+      toast({ title: "Something went wrong", description: error.message });
+    } else {
+      form.reset();
+      toast({
+        title: "Success",
+      });
+      setIsOpen(false);
+    }
   };
 
   return (
-    <Sheet modal={true}>
+    <Sheet modal={true} onOpenChange={setIsOpen} open={isOpen}>
       <SheetTrigger asChild>
-        <div className="flex flex-row items-center hover:bg-slate-200 rounded-md p-3 cursor-pointer w-full justify-between">
+        <Button
+          variant={"ghost"}
+          onClick={() => setIsOpen(true)}
+          className="flex flex-row items-center hover:bg-slate-200 rounded-md p-4 cursor-pointer w-full justify-between"
+        >
           <p>TK</p>
           <PenIcon />
-        </div>
+        </Button>
       </SheetTrigger>
       <SheetContent side={"left"}>
         <SheetHeader>

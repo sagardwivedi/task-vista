@@ -5,3 +5,8 @@ export async function checkForLogin() {
   const { data } = await supabase.auth.getUser();
   return !!data.user;
 }
+
+export async function getUserId() {
+  const supabase = await createSupabaseServerClient();
+  return (await supabase.auth.getUser()).data.user?.id;
+}
